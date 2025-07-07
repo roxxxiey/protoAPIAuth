@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "don.sso.v1;ssov1";
+
+service Auth{
+    rpc Register(RegisterRequest) returns (RegisterResponse); //— регистрация
+
+    rpc Login(LoginRequest) returns (LoginResponse); //— вход
+
+    rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse); //— проверка токена
+
+    rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse); // - обновление токена
+}
+
+message RegisterRequest{
+  string email = 1;
+  string name = 2;
+  string password = 3;
+}
+message RegisterResponse{
+  int64 user_id = 1;
+}
+
+message LoginRequest{
+  string email = 1;
+  string password = 2;
+  int32 app_id = 3;
+  string type = 4;
+}
+message LoginResponse{
+  string access_token = 1;
+  string refresh_token = 2;
+  int64 expires_at = 3;
+}
+
+message ValidateTokenRequest{
+  string access_token = 1;
+}
+message ValidateTokenResponse{
+  bool valid = 1;
+  int64 user_id = 2;
+  string email = 3;
+  int64 expires_at = 4;
+}
+
+message RefreshTokenRequest{
+  string refresh_token = 1;
+}
+message RefreshTokenResponse{
+  string access_token = 1;
+  int64 expires_at = 2;
+}
+
