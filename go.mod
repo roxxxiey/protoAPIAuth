@@ -1,1 +1,1 @@
-module protoAPIAuth
+module github.com/roxxxiey/protoAPIAuth
